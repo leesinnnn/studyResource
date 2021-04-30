@@ -1,0 +1,38 @@
+# 笔记本上所有的txt文本整合
+1. http请求分为一般请求和ajax请求，一般请求会导致页面的重新渲染，ajax请求不会导致页面的重新刷新。现在发送ajax请求的方式有两种，fetch和xhr
+2. content-type 为urlencoded的请求体的格式为username=liqing&age=18 （content-type指定的是请求体或者是响应体内容的格式）
+3. restful规范 get：从服务器端获取数据，post：向服务器添加新数据，put：更新服务器端已经数据，delete：删除服务器数据。同一个请求地址可以进行多个操作，后端会根据请求方法的不同来进行不同的操作。
+4. get请求返回状态码200 ok，post请求返回状态码201 created，put请求返回状态码200 ok，delete请求返回状态码200 ok
+5. 跨域的时候会先用options方法发送一个预检请求，状态码为204 no content
+6. 数据库的结构是一个对象，对象里面的每个属性代表是一个表，每个属性的vaule值是一个数组，数组里面有很多对象，每个对象标识一条数据。
+7. ajax请求可以是同步的也可以是异步的，只不过我们一般都是异步的，同步的也没什么意思。
+8. let,const声明的变量即使在全局作用域下也不会挂到window上面。
+9. axios不是构造函数Axios的实例，本质上是Axios.prototype.request方法，只不过这个方法的this指向被指定到了Axios的实例上，
+然后再将Axios.prototype上面的所有方法都挂到Axios.prototype.request上面，并且把这些方法this指向都指向Axios的实例，然后再将Axios的实例上面的属性也挂载到这个request方法上面。
+10. axios会根据data的类型来决定content-type的内容，比如data是对象类型的，就会以json的格式直接发送，如果data是name=liqing&age=18类型的，就用urlencoded的格式。
+如果你想用name=liqing&age=18这种形式，又想指定为json，可以在请求拦截器里面将数据转换成data对象的形式。
+11. new axios.cancelToken((c) => {// 把c存起来}) 这个构造器里面的函数是同步执行的。
+12. axios请求拦截器 =》发送请求 =》响应拦截器 =》 我们自己指定的回调构成了一条promise链。
+
+http://192.168.9.8/srun_portal_pc.php?ac_id=1&
+
+https://www.58pic.com/tupian/gaigekaifang-808-0.html
+
+https://www.17sucai.com/pins/tag/8740.html
+
+https://dlercloud.com/
+
+https://www.pites.cc/video/30382.html
+
+http://liveipool.com/blog/2018/08/01/learn-front-end-source-codes/
+
+
+username: 7klhphkf
+password: 6a1aa4d6
+Bt-Panel: http://39.98.191.29:8888/94088603
+
+深度优先，广度优先
+https://www.cnblogs.com/zhangnan35/p/11217939.html
+jianshu.com/nb/43171210
+
+https://blog.csdn.net/yy150122/article/details/106146414  linux笔记
