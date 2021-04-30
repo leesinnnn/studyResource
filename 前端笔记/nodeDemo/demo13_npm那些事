@@ -1,0 +1,4 @@
+npm init 生成包管理文件package.json
+npm install 根据包管理文件的dependences下载依赖文件
+npm install axios --save 下载axios模块并在包管理文件中添加dependences
+npm config set registry https://registry.npm.taobao.org 配置淘宝镜像

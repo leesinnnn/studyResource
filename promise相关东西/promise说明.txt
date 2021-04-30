@@ -1,0 +1,11 @@
+1. webApis有专门的线程去发ajax请求，当执行发送请求的函数时例如axios()，js引擎做的事情只是将这个函数交给webApis让它去执行，就算完了。
+2. then回调是在promise确定状态之后才放到微队列里面去的。
+3. 有两种方式：先指定回调再确定的数据，或者先确定的数据再指定的回调。
+4. promise对比之前： 指定回调的方式更为灵活，以前是必须回调在一开始就指定好了，promise可以哪个时候指定都可以。
+还有一个就是当嵌套多层的时候，回调地狱不便于阅读，而且异常处理很难，promise便于阅读，异常处理可以直接在最后指定一个就可以了。（async/await需要用try catch包裹）
+5. promise的excutor执行器里面抛出的异常会被promise捕获，从而获得失败的promsie
+6. 同一个实例promise可以用多个then指定多个回调，当promise实例状态确定之后可以依次顺序调用指定的回调。（注意这里不是指then的链式调用
+7. excutor执行器是顺序执行的。
+8. 两个关键点是 1： 先指定回调再确定的数据，或者先确定的数据再指定的回调。2：.then()方法返回的promise的状态和值。3：返回的promise都是新的
+9. 错误透传和中断promise链
+10. Promise.resolve(Promise.reject(1))返回的是失败的promise
