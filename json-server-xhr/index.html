@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./myAxios.js"></script>
+</head>
+
+<body>
+  <button onclick="get()">get请求</button>
+  <button onclick="post()">post请求</button>
+  <button onclick="put()">put请求</button>
+  <button onclick="Delete()">delete请求</button>
+
+  <script>
+    function get() {
+      myAxios({
+        url: 'http://localhost:3000/posts',
+        method: 'GET',
+        params: {
+          id: 1
+        }
+      }).then(data => {
+        console.log(data, data.data)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+    function post() {
+      myAxios({
+        url: 'http://localhost:3000/posts',
+        method: 'POST',
+        data: {
+          title: 'ceshishuju',
+          author: 'liqing'
+        }
+      }).then(data => {
+        console.log(data, data.data)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+    function Delete() {
+      myAxios({
+        url: 'http://localhost:3000/posts/2',
+        method: 'DELETE',
+      }).then(data => {
+        console.log(data, data.data)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+    function put() {
+      myAxios({
+        url: 'http://localhost:3000/posts',
+        method: 'put',
+        params: {
+          id: 3
+        },
+        data: {
+          title: 'xiugai',
+          author: 'xiaoyu'
+        }
+      }).then(data => {
+        console.log(data, data.data)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+  </script>
+</body>
+
+</html>
