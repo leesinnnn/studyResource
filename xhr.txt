@@ -36,3 +36,5 @@ https://www.cnblogs.com/zhangnan35/p/11217939.html
 jianshu.com/nb/43171210
 
 https://blog.csdn.net/yy150122/article/details/106146414  linux笔记
+
+https://lurongtao.gitee.io/felixbooks-gp19-node.js/  node基础
