@@ -9,3 +9,4 @@
 8. 两个关键点是 1： 先指定回调再确定的数据，或者先确定的数据再指定的回调。2：.then()方法返回的promise的状态和值。3：返回的promise都是新的
 9. 错误透传和中断promise链
 10. Promise.resolve(Promise.reject(1))返回的是失败的promise
+11. Promise一旦状态确定之后就不会再改变
