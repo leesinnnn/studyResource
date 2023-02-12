@@ -6,7 +6,7 @@ server.listen(3000, () => {
 })
 
 server.on('request', (request, response) => {
-  switch(request.url) {
+  switch (request.url) {
     case '/login':
       response.end('login')
     case '/index':

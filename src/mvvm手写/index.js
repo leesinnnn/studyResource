@@ -1,4 +1,4 @@
-function observe(data) {
+function observe (data) {
   if (typeof data !== 'object') return
   Object.keys(data).forEach(key => {
     const dep = new Dep()
@@ -22,43 +22,43 @@ function observe(data) {
   })
 }
 
-var id = 0
+let id = 0
 
-function Dep() {
+function Dep () {
   this.watchers = []
   this.id = id++
 }
 
 Dep.prototype = {
 
-  addWatcher(watcher) {
+  addWatcher (watcher) {
     this.watchers.push(watcher)
   },
 
-  removeWatcher(watcher) {
+  removeWatcher (watcher) {
     const index = this.watchers.indexOf(watcher)
     this.watchers.splice(index, 1)
   },
 
-  notify() {
+  notify () {
     this.watchers.forEach(watcher => watcher.update())
   }
 }
 
 Dep.target = null
 
-function Watcher(data, exp) {
+function Watcher (data, exp) {
   this.depsId = {}
   this.value = this.getValue(data, exp)
 }
 
 Watcher.prototype = {
-  append(dep) {
+  append (dep) {
     if (this.depsId[dep.id]) return
     dep.addWatcher(this)
     this.depsId[dep.id] = dep
   },
-  getValue(data, exp) {
+  getValue (data, exp) {
     Dep.target = this
     const expArr = exp.split('.')
     let value = data

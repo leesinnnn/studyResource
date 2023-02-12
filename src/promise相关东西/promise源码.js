@@ -1,12 +1,12 @@
 // 手写一个自己的promise
-function MyPromise(excutor) {
+function MyPromise (excutor) {
   const self = this
   this.data = ''
   this.status = 'pendding'
   // 存入then回调的函数，每一个是一个对象
   this.callbacks = []
 
-  function resolve(value) {
+  function resolve (value) {
     if (self.status !== 'pendding') return
     self.data = value
     self.status = 'resolved'
@@ -15,7 +15,7 @@ function MyPromise(excutor) {
     })
   }
 
-  function reject(value) {
+  function reject (value) {
     if (self.status !== 'pendding') return
     self.data = value
     self.status = 'rejected'
@@ -29,12 +29,11 @@ function MyPromise(excutor) {
 
 MyPromise.prototype.then = function (onResolve, onReject) {
   const self = this
-  onResolve = onResolve ? onResolve : value => value
-  onReject = onReject ? onReject : reson => { throw reson }
+  onResolve = onResolve || (value => value)
+  onReject = onReject || (reson => { throw reson })
 
   return new MyPromise((resolve, reject) => {
-
-    function handle(callback) {
+    function handle (callback) {
       setTimeout(() => {
         try {
           const result = callback(self.data)
@@ -49,9 +48,11 @@ MyPromise.prototype.then = function (onResolve, onReject) {
       }, 0)
     }
 
-    self.status === 'resolved' ? handle(onResolve) :
-      self.status === 'rejected' ? handle(onReject) :
-        self.callbacks.push({
+    self.status === 'resolved'
+      ? handle(onResolve)
+      : self.status === 'rejected'
+        ? handle(onReject)
+        : self.callbacks.push({
           onResolve: () => handle(onResolve),
           onReject: () => handle(onReject)
         })
@@ -63,7 +64,6 @@ MyPromise.prototype.catch = function (onReject) {
 }
 
 MyPromise.resolve = function (value) {
-
   return new MyPromise((resolve, reject) => {
     if (value instanceof MyPromise) {
       value.then(resolve, reject)
@@ -71,7 +71,6 @@ MyPromise.resolve = function (value) {
       resolve(value)
     }
   })
-
 }
 
 MyPromise.reject = function (reson) {
@@ -122,9 +121,7 @@ MyPromise.allSettled = function (arr) {
   const resultValue = new Array(promiseArr.length)
 
   return new MyPromise((resolve, reject) => {
-
-    function handle(value, index, status) {
-
+    function handle (value, index, status) {
       resultValue[index] = {
         status
       }
@@ -147,7 +144,6 @@ MyPromise.allSettled = function (arr) {
         handle(reson, index, 'rejected')
       })
     })
-
   })
 }
 
@@ -168,4 +164,3 @@ MyPromise.any = function (arr) {
     })
   })
 }
-

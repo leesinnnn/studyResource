@@ -1,4 +1,4 @@
-function myPromise(excutor) {
+function myPromise (excutor) {
   // 防止this在调用时被篡改
   const instance = this
   instance.state = 'pending'
@@ -6,10 +6,10 @@ function myPromise(excutor) {
   instance.callback = []
   instance.resolved = false
 
-  function resolve(data) {
+  function resolve (data) {
     // 如果promise已经确定过状态，则不会再改变
     if (instance.state !== 'pending') {
-      return;
+      return
     }
     // 如果resolve的参数是一个promise，那么返回的promise的状态和数据和resolve参数的promise一样
     if (data instanceof myPromise) {
@@ -31,8 +31,8 @@ function myPromise(excutor) {
       instance.callback.forEach(item => item.onResolve())
     }
   }
-  
-  function reject(data) {
+
+  function reject (data) {
     if (instance.state !== 'pending') {
       return
     }
@@ -54,12 +54,12 @@ function myPromise(excutor) {
   }
 }
 
-myPromise.prototype.then = function(onResolve, onReject) {
+myPromise.prototype.then = function (onResolve, onReject) {
   const instance = this
   // promise状态确定之后会执行then传入的回调方法，如果promise是成功的或失败的但是没有传入成功或失败的回调，则then方法返回该promise的一个新副本
   const fromatedOnResolve = onResolve || (res => res)
   const formatedOnReject = onReject || (err => { throw err })
-  
+
   return new myPromise((resolve, reject) => {
     const handleCallback = fn => {
       try {
@@ -79,22 +79,22 @@ myPromise.prototype.then = function(onResolve, onReject) {
         reject(e)
       }
     }
-    instance.state === 'fulfilled' ? handleCallback(fromatedOnResolve) :
-      instance.state === 'rejected' ? handleCallback(formatedOnReject) :
-        instance.callback.push({
+    instance.state === 'fulfilled'
+      ? handleCallback(fromatedOnResolve)
+      : instance.state === 'rejected'
+        ? handleCallback(formatedOnReject)
+        : instance.callback.push({
           onResolve: () => handleCallback(fromatedOnResolve),
           onReject: () => handleCallback(formatedOnReject)
         })
-
   })
-  
 }
 
 // 接收一个数组或者是一个类数组
 // 数组里面可以不是promise
 // 全部成功返回成功的promise且值为传入的promise的顺序
 // 只要有一个失败就返回失败的promise且值为失败的promise的值
-myPromise.all = function(args) {
+myPromise.all = function (args) {
   const promises = [...args].map(promise => myPromise.reslove(promise))
   const promisesValueArr = Array(promises.length)
   return new myPromise((resolve, reject) => {
@@ -113,7 +113,7 @@ myPromise.all = function(args) {
 }
 
 // 如果参数是promise，则返回一个新的promise副本，否则返回一个成功的promise且值为传入的参数
-myPromise.resolve = function(value) {
+myPromise.resolve = function (value) {
   return new myPromise((resolve, reject) => {
     if (value instanceof myPromise) {
       value.then(resolve, reject)
@@ -124,7 +124,7 @@ myPromise.resolve = function(value) {
 }
 
 // 返回一个失败的promise，值是传入的参数
-myPromise.reject = function(value) {
+myPromise.reject = function (value) {
   return new Promise((_, reject) => {
     reject(value)
   })
@@ -132,19 +132,18 @@ myPromise.reject = function(value) {
 
 // 当promise的状态变为rejected时执行传入的回调，如果promise的状态是成功则返回当前promise的一个新副本
 // 如果传入的回调的执行结果不为promise则返回一个状态为fulfilled的promise，值为回调的执行结果；否则返回promise的一个新副本
-myPromise.prototype.catch = function(callback) {
-  const instance = this;
+myPromise.prototype.catch = function (callback) {
+  const instance = this
   return instance.then(null, callback)
 }
 
 // 只要promise状态确定，传入的回调函数都会执行
 // 如果回调函数的执行结果不是一个失败的promise则返回instance的一个新副本；否则返回失败promise的一个新副本
 // fn执行报错，返回失败的promise，值为捕获的错误
-myPromise.prototype.finally = function(fn) {
+myPromise.prototype.finally = function (fn) {
   const instance = this
 
   return new MyPromise((resolve, reject) => {
-
     instance.then(
       val => {
         MyPromise.resolve(fn()).then(
@@ -165,7 +164,7 @@ myPromise.prototype.finally = function(fn) {
 // 接收一个数组或者是一个类数组
 // 数组里面可以不是promise
 // 只要有一个pormise状态确定，就返回该promise的新副本
-myPromise.race = function(args) {
+myPromise.race = function (args) {
   const promises = [...args].map(item => Promise.resolve(args))
 
   return new MyPromise((resolve, reject) => {
@@ -182,7 +181,7 @@ myPromise.race = function(args) {
 // 数组里面可以不是promise
 // 等到所有promise的状态都确定之后返回一个fulfilled的promise，value值为一个数组，里面每一个元素是一个对象{ status: 'fulfilled', value: ''} | { status: 'fulfilled', reason: ''}
 // 返回值顺序是传入数组的顺序
-myPromise.allSettled = function(args) {
+myPromise.allSettled = function (args) {
   const promises = [...args].map(item => Promise.resolve(args))
   const promiseValueArr = Array(promises.length)
 
@@ -196,11 +195,11 @@ myPromise.allSettled = function(args) {
           }
         },
         reason => {
-          promisesValueArr[index] = { status: 'rejected', reason: reason }
+          promisesValueArr[index] = { status: 'rejected', reason }
           if (Object.values(promisesValueArr).length === promises.length) {
             resolve(promiseValueArr)
           }
-        },
+        }
       )
     })
   })
@@ -210,7 +209,7 @@ myPromise.allSettled = function(args) {
 // 数组里面可以不是promise
 // 全部失败返回rejected的promise且值为传入的promise的顺序
 // 只要有一个成功就返回成功的promise，值为成功的promise的值
-myPromise.all = function(args) {
+myPromise.all = function (args) {
   const promises = [...args].map(promise => myPromise.reslove(promise))
   const promisesValueArr = Array(promises.length)
   return new myPromise((resolve, reject) => {

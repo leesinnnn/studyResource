@@ -6,9 +6,9 @@ const server = http.createServer()
 
 server.on('request', (request, response) => {
   const url = request.url
-  if(url === '/') {
+  if (url === '/') {
     fs.readFile('./demo07_发送文件/index.html', (err, data) => {
-      if(err) {
+      if (err) {
         console.log('读取文件失败')
       } else {
         response.setHeader('Content-Type', 'text/html; charset=utf-8')
@@ -16,9 +16,9 @@ server.on('request', (request, response) => {
       }
     })
   } else {
-    if(url === '/image') {
+    if (url === '/image') {
       fs.readFile('./demo07_发送文件/a.jpg', (err, data) => {
-        if(err) {
+        if (err) {
           response.end('服务器错误')
         } else {
           response.setHeader('Content-type', 'image/jpeg')

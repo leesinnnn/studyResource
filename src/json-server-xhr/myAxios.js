@@ -5,7 +5,7 @@
 }
 ?a=1&b=2
 */
-function myAxios({ url, method = 'GET', data = {}, params = {} }) {
+function myAxios ({ url, method = 'GET', data = {}, params = {} }) {
   return new Promise((resolve, reject) => {
     method = method.toUpperCase()
     const request = new XMLHttpRequest()
@@ -32,7 +32,7 @@ function myAxios({ url, method = 'GET', data = {}, params = {} }) {
     }
     request.open(method, url, true)
     if (method === 'POST' || method === 'PUT') {
-      request.setRequestHeader('Content-Type', "application/json;charset=utf-8")
+      request.setRequestHeader('Content-Type', 'application/json;charset=utf-8')
       request.send(JSON.stringify(data))
     } else {
       request.send()
