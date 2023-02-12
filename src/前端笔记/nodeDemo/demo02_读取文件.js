@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs');
 fs.readFile('./data/1.txt', (err, data) => {
-  console.log(data.toString())
-})
+  console.log(data.toString());
+});

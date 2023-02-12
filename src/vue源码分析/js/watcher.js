@@ -1,21 +1,21 @@
 function Watcher (vm, exp, cb) {
-  this.cb = cb
-  this.vm = vm
-  this.exp = exp
-  this.depIds = {}
-  this.value = this.get()
+  this.cb = cb;
+  this.vm = vm;
+  this.exp = exp;
+  this.depIds = {};
+  this.value = this.get();
 }
 
 Watcher.prototype = {
   update: function () {
-    this.run()
+    this.run();
   },
   run: function () {
-    const value = this.get()
-    const oldVal = this.value
+    const value = this.get();
+    const oldVal = this.value;
     if (value !== oldVal) {
-      this.value = value
-      this.cb.call(this.vm, value, oldVal)
+      this.value = value;
+      this.cb.call(this.vm, value, oldVal);
     }
   },
   addDep: function (dep) {
@@ -34,23 +34,23 @@ Watcher.prototype = {
     // 触发了addDep(), 在整个forEach过程，当前wacher都会加入到每个父级过程属性的dep
     // 例如：当前watcher的是'child.child.name', 那么child, child.child, child.child.name这三个属性的dep都会加入当前watcher
     if (!this.depIds.hasOwnProperty(dep.id)) {
-      dep.addSub(this)
-      this.depIds[dep.id] = dep
+      dep.addSub(this);
+      this.depIds[dep.id] = dep;
     }
   },
   get: function () {
-    Dep.target = this
-    const value = this.getVMVal()
-    Dep.target = null
-    return value
+    Dep.target = this;
+    const value = this.getVMVal();
+    Dep.target = null;
+    return value;
   },
 
   getVMVal: function () {
-    const exp = this.exp.split('.')
-    let val = this.vm._data
+    const exp = this.exp.split('.');
+    let val = this.vm._data;
     exp.forEach(function (k) {
-      val = val[k]
-    })
-    return val
+      val = val[k];
+    });
+    return val;
   }
-}
+};

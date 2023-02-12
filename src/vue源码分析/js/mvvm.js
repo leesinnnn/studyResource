@@ -1,35 +1,35 @@
 function MVVM (options) {
-  this.$options = options
-  const data = this._data = this.$options.data
-  const me = this
+  this.$options = options;
+  const data = this._data = this.$options.data;
+  const me = this;
 
   // 数据代理
   // 实现 vm.xxx -> vm._data.xxx
   Object.keys(data).forEach(function (key) {
-    me._proxy(key)
-  })
+    me._proxy(key);
+  });
 
-  observe(data, this)
+  observe(data, this);
 
-  this.$compile = new Compile(options.el || document.body, this)
+  this.$compile = new Compile(options.el || document.body, this);
 }
 
 MVVM.prototype = {
   $watch: function (key, cb, options) {
-    new Watcher(this, key, cb)
+    new Watcher(this, key, cb);
   },
 
   _proxy: function (key) {
-    const me = this
+    const me = this;
     Object.defineProperty(me, key, {
       configurable: false,
       enumerable: true,
       get: function proxyGetter () {
-        return me._data[key]
+        return me._data[key];
       },
       set: function proxySetter (newVal) {
-        me._data[key] = newVal
+        me._data[key] = newVal;
       }
-    })
+    });
   }
-}
+};

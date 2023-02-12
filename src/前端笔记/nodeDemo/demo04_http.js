@@ -1,17 +1,17 @@
-const http = require('http')
-const server = http.createServer()
+const http = require('http');
+const server = http.createServer();
 
 server.listen(3000, () => {
-  console.log('服务器已经启动等待连接')
-})
+  console.log('服务器已经启动等待连接');
+});
 
 server.on('request', (request, response) => {
   switch (request.url) {
     case '/login':
-      response.end('login')
+      response.end('login');
     case '/index':
-      response.end('index')
+      response.end('index');
     default:
-      response.end('')
+      response.end('');
   }
-})
+});

@@ -5,9 +5,9 @@
 
 fetch('http://localhost:3000/posts/2')
   .then(response => {
-    console.log(response)
-    return response.json()
+    console.log(response);
+    return response.json();
   })
   .then(data => {
-    console.dir(data)
-  })
+    console.dir(data);
+  });

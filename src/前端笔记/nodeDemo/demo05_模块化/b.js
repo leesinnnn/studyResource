@@ -1,3 +1,3 @@
-const foo = 'aaaa'
+const foo = 'aaaa';
 
-exports.name = foo
+exports.name = foo;
