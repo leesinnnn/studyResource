@@ -1,8 +1,8 @@
-function observe (data) {
+export function observe (data) {
   if (typeof data !== 'object') return;
   Object.keys(data).forEach(key => {
     const dep = new Dep();
-    const value = data[key];
+    let value = data[key];
     observe(value);
     Object.defineProperty(data, key, {
       enumerable: true,

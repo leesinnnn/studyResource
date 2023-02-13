@@ -20,7 +20,11 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "husky": "^8.0.3",
+    "lint-staged": "^13.1.1",
     "shelljs": "^0.8.5",
     "typescript": "*"
+  },
+  "lint-staged": {
+    "src/**": ["eslint src/"]
   }
 }

@@ -9,8 +9,10 @@ server.on('request', (request, response) => {
   switch (request.url) {
     case '/login':
       response.end('login');
+      break;
     case '/index':
       response.end('index');
+      break;
     default:
       response.end('');
   }

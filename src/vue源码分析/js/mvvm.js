@@ -1,3 +1,6 @@
+import { observe } from './observer';
+import { Watcher } from './watcher';
+import { Compile } from './compile';
 function MVVM (options) {
   this.$options = options;
   const data = this._data = this.$options.data;
@@ -16,6 +19,7 @@ function MVVM (options) {
 
 MVVM.prototype = {
   $watch: function (key, cb, options) {
+    // eslint-disable-next-line no-new
     new Watcher(this, key, cb);
   },
 

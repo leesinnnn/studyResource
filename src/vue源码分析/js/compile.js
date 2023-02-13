@@ -1,4 +1,6 @@
-function Compile (el, vm) {
+import { Watcher } from './watcher';
+/* eslint-disable eqeqeq */
+export function Compile (el, vm) {
   this.$vm = vm;
   this.$el = this.isElementNode(el) ? el : document.querySelector(el);
 
@@ -15,6 +17,7 @@ Compile.prototype = {
     let child;
 
     // 将原生节点拷贝到fragment
+    // eslint-disable-next-line no-cond-assign
     while (child = el.firstChild) {
       fragment.appendChild(child);
     }
@@ -90,6 +93,7 @@ Compile.prototype = {
 };
 
 // 指令处理集合
+// eslint-disable-next-line no-var
 var compileUtil = {
   text: function (node, vm, exp) {
     this.bind(node, vm, exp, 'text');
@@ -124,6 +128,7 @@ var compileUtil = {
 
     updaterFn && updaterFn(node, this._getVMVal(vm, exp));
 
+    // eslint-disable-next-line no-new
     new Watcher(vm, exp, function (value, oldValue) {
       updaterFn && updaterFn(node, value, oldValue);
     });
@@ -162,6 +167,7 @@ var compileUtil = {
   }
 };
 
+// eslint-disable-next-line no-var
 var updater = {
   textUpdater: function (node, value) {
     node.textContent = typeof value === 'undefined' ? '' : value;

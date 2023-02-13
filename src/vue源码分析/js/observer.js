@@ -16,6 +16,7 @@ Observer.prototype = {
 
   defineReactive: function (data, key, val) {
     const dep = new Dep();
+    // eslint-disable-next-line no-unused-vars
     let childObj = observe(val);
 
     Object.defineProperty(data, key, {
@@ -41,7 +42,7 @@ Observer.prototype = {
   }
 };
 
-function observe (value, vm) {
+export function observe (value, vm) {
   if (!value || typeof value !== 'object') {
     return;
   }
@@ -51,7 +52,7 @@ function observe (value, vm) {
 
 let uid = 0;
 
-function Dep () {
+export function Dep () {
   this.id = uid++;
   this.subs = [];
 }
@@ -67,6 +68,7 @@ Dep.prototype = {
 
   removeSub: function (sub) {
     const index = this.subs.indexOf(sub);
+    // eslint-disable-next-line eqeqeq
     if (index != -1) {
       this.subs.splice(index, 1);
     }

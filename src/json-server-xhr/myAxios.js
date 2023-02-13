@@ -5,7 +5,7 @@
 }
 ?a=1&b=2
 */
-function myAxios ({ url, method = 'GET', data = {}, params = {} }) {
+export function myAxios ({ url, method = 'GET', data = {}, params = {} }) {
   return new Promise((resolve, reject) => {
     method = method.toUpperCase();
     const request = new XMLHttpRequest();
@@ -19,6 +19,7 @@ function myAxios ({ url, method = 'GET', data = {}, params = {} }) {
         response.statusText = request.statusText;
         resolve(response);
       } else {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject('发生了错误，状态码为' + request.status);
       }
     };

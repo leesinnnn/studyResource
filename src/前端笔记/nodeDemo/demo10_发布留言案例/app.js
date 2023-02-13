@@ -28,6 +28,7 @@ const comments = [
 
 http
   .createServer((request, response) => {
+    // eslint-disable-next-line n/no-deprecated-api
     const urlObj = URL.parse(request.url, true);
     const url = urlObj.pathname;
     if (url === '/') {
