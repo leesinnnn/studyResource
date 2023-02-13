@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.34.0",
@@ -25,6 +27,8 @@
     "typescript": "*"
   },
   "lint-staged": {
-    "src/**": ["eslint src/"]
+    "src/**": [
+      "eslint src/"
+    ]
   }
 }
