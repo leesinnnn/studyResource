@@ -1,15 +1,15 @@
 # 学习资源整理
 > 之前学习过于没有章法，貌似看了很多学了很多，但是时间一久就不再记得了。这篇文档对学习资源分类整理、对获取学习资源的途径也做整理以及一些学习计划的安排，顺便再放些积累的零散知识点，期望能够更有条理的学习。
 
-# 学习途径
+## 学习途径
 1. 微信公众号
 2. 掘金
 3. github star的一些博客仓库
 4. RSS 聚合应用 - 今日热榜
 5. b站金融视频
 
-# 学习资源
-## 掘金小册
+## 学习资源
+### 掘金小册
 1. [Babel通关秘籍](https://juejin.cn/book/6946117847848321055?enter_from=course_center)
 2. [Webpacck5核心原理与应用实践](https://juejin.cn/book/7115598540721618944?enter_from=course_center)
 3. [用 npm script 打造超溜的前端工作流](https://juejin.cn/book/6844723718749421582?enter_from=course_center)
@@ -17,11 +17,17 @@
 5. [JavaScript 设计模式核⼼原理与应⽤实践](https://juejin.cn/book/6844733790204461070?enter_from=course_center)
 6. [前端调试通关秘籍](https://juejin.cn/book/7070324244772716556?enter_from=course_center)
 
-## 微信公众号
+### 微信公众号
 1. 歌白说深度文章
 
-# 知识点
-## commit message规范
+## 学习概要
+> 学习了什么
+1. 手写一个redux。洋葱模型，一层套一层，装饰器模式。仓库名：redux-raw
+2. pnpm的worksspace构建monorepo项目
+3. 用npm script打造工作流
+
+## 知识点
+### commit message规范
 规范格式为 type(scope): subject
 
 1. 所有type
@@ -41,7 +47,7 @@ chore: 改变构建流程、或者增加依赖库、工具
 
 3. subject 为此次变更的描述 50个字符以内
 
-## npm script
+### npm script
 1. 命令串行
 ```
 npm run test && npm run dev
@@ -114,14 +120,14 @@ exec('npm-run-all --parallel cover:serve cover:open');
    },
 ```
 
-## babel
+### babel
 > babel是一个转译器，是高级语言之间的转化。编译器则是高级语言到低级语言的转化
-### babel转译流程
+#### babel转译流程
 babel的转译流程分为三个阶段。第一个阶段是将代码通过词法分析和语法分析转换成AST树；第二个阶段是遍历AST进行AST的增删改查工作；转译的过程主要发生在此阶段。第三个阶段是将AST树转化生成目标代码，生成sorceMap等。
 
 三个阶段分别对应于babel的三个包：@babel/parser、@babel/traverse、@bebel/generator
-# 学习计划
-## 近期计划
+## 学习计划
+### 近期计划
 1. monorepo入门
 2. pnpm入门
 3. webpack入门
@@ -152,8 +158,8 @@ babel的转译流程分为三个阶段。第一个阶段是将代码通过词法
 1. 冥想歌曲：看远方的站台 -陈粒
 2. 冥想和思考时有意识地集中在额头
 
-## 学习概要
-> 学习了什么
-1. 手写一个redux。洋葱模型，一层套一层，装饰器模式。仓库名：redux-raw
-2. pnpm的worksspace构建monorepo项目
-3. 用npm script打造工作流
+## 金融知识
+### 注册制
+A股股票发行机制将要改为注册制。相比之前的审核制，注册制在上市的审核以及要求方面变得更为宽松。
+从美国注册制的发展历史来看，在初期各种监管制度不完善的情况下会存在一些皮包企业伪造公司财报和业绩再大量买入公司股票造成公司虚假繁荣的景象来吸引散户投资，然后在高位卖出股票收割一大波韭菜。
+另外A股换手率相比于其他主要股市国家较高，2020年A股换手率258.6%，而世界其他主要股市国家的平均换手率在31.7%。
