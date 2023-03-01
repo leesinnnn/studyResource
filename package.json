@@ -27,7 +27,7 @@
     "typescript": "*"
   },
   "lint-staged": {
-    "src/**": [
+    "src/**/*.js": [
       "eslint src/"
     ]
   }
