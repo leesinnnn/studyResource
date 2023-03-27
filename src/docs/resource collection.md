@@ -28,105 +28,10 @@
 3. 用npm script打造工作流
 
 ## 知识点
+> 由于知识点所涉及的内容比较多，放在此文档中会使此文档略显复杂，所以拆开来放入其他文档中。这里只放相关文档的标题
 ### commit message规范
-规范格式为 type(scope): subject
-
-1. 所有type
-```
-feat: 新功能
-fix: bug修复
-docs: 文档改变
-style: 代码格式改变
-refactor: 代码重构
-perf: 性能优化
-test: 增加测试
-build: 改变了build工具
-revert: 撤销上一次的commit
-chore: 改变构建流程、或者增加依赖库、工具
-```
-2. scope 此次变更影响的范围(可选)
-
-3. subject 为此次变更的描述 50个字符以内
-
 ### npm script
-1. 命令串行
-```
-npm run test && npm run dev
-```
-2. 命令并行
-> 加上wait的好处是启动了长时间进程可以用ctrl + c来停止，否则没办法结束启动在后台的进程。
-```
-npm run test & npm run dev & wait
-```
-3. npm-run-all
-> npm-run-all 可以更简洁地运行多命令，并且支持通配符匹配
-```
-npm-run-all lint:* build
-npm-run-all --parallel lint:* build
-```
-4. 给npm script传递参数
-> 注意 --fix 参数前面的 -- 分隔符，意指要给 npm run lint:js 实际指向的命令传递额外的参数。
-```
-{
-  "scripts": {
-    "lint:js": "eslint *.js",
-    "lint:js:fix": "npm run lint:js -- --fix"
-  }
-}
-```
-5. 使用npm script钩子
-> 执行npm run cover时会先执行precover命令，执行完cover命令后会执行postcover命令
-```
-{
-  "scripts": {
-    "precover": "rm -rf coverage",
-    "cover": "nyc --reporter=html npm test",
-    "postcover": "rm -rf .nyc_output && opn coverage/index.html"
-  }
-}
-```
-6. npm script使用变量
-> npm run env 能拿到完整的变量列表，使用$符号获取变量
-```
-{
-  "scripts": {
-    "test": "echo $npm_package_name"
-  }
-}
-```
-7. 使用node.js代替shell脚本
-```
-// cover.js
-const { rm, cp, mkdir, exec, echo, env } = require('shelljs');
-const chalk = require('chalk');
-const npm_package_version = env['npm_package_version'];
-
-console.log(chalk.green('1. remove old coverage reports...'));
-rm('-rf', 'coverage');
-rm('-rf', '.nyc_output');
-
-console.log(chalk.green('2. run test and collect new coverage...'));
-exec('nyc --reporter=html npm run test');
-
-console.log(chalk.green('3. archive coverage report by version...'));
-mkdir('-p', 'coverage_archive/' + npm_package_version);
-cp('-r', 'coverage/*', 'coverage_archive/' + npm_package_version);
-
-console.log(chalk.green('4. open coverage report for preview...'));
-exec('npm-run-all --parallel cover:serve cover:open');
-```
-```
-   "scripts": {
-      "cover": "node scripts/cover.js",
-   },
-```
-
 ### babel
-> babel是一个转译器，是高级语言之间的转化。编译器则是高级语言到低级语言的转化
-#### babel转译流程
-babel的转译流程分为三个阶段。第一个阶段是将代码通过词法分析和语法分析转换成AST树；第二个阶段是遍历AST进行AST的增删改查工作；转译的过程主要发生在此阶段。第三个阶段是将AST树转化生成目标代码，生成sorceMap等。
-
-三个阶段分别对应于babel的三个包：@babel/parser、@babel/traverse、@bebel/generator
 ## 学习计划
 ### 近期计划
 1. monorepo入门
