@@ -46,3 +46,102 @@ babel的转译流程分为三个阶段。第一个阶段是将代码通过词法
 
 ## babel的api
 ### @babel/parser
+parser接收两个参数，需要parse的字符串和parse的配置。
+```typescript
+interface IParseOptions {
+  plugins: string[]; //指定jsx，typescript等插件来解析对应的语法
+  sourceType: 'modudle' | 'script' | 'unambiguus'; //指定是否解析模块化语法
+  // ......
+}
+function parser(input: string, options: IParseOptions) {
+
+}
+```
+
+### @babel/traverse
+traverse接收两个参数，需要traverse的AST结构和traverse配置
+```typescript
+function traverse(ast: AST, options: ITraverseOptions) {
+
+}
+```
+下面贴一些traverse配置的例子
+1. 指定开始遍历和结束遍历两个阶段
+```typescript
+{
+  FunctionDeclaration: {
+    enter(path, state) {}, // 进入节点时调用
+    exit(path, state) {}  // 离开节点时调用
+  }
+}
+```
+2. 只指定一个函数则是进入节点时调用
+```typescript
+{
+  FunctionDeclaration(path, state) {}
+}
+```
+3. 一个visitor指定多个AST类型
+```typescript
+{
+  'FunctionDeclaration|VariableDeclaration'(path, state) {}
+}
+```
+4. 使用别名指定一个大类的AST
+```typescript
+{
+  Declaration(path, state) {}
+}
+```
+
+### @babel/types
+创建或者判断一些AST的类型
+#### 创建
+```typescript
+t.ifStatement(test, consequent, alternate)
+```
+#### 判断
+1. is返回布尔值，assert断言为否时抛出错误
+2. options配置附加一个更加精细的判断如`t.isIdentifier(node, { name: 'test' })`
+```typescript
+t.isIfStatement(node, options)
+t.assertIfStatement(node, options)
+```
+
+### @babel/template
+使用@babel/types创建AST较为复杂需要一个一个创建和组装，@babel/template提供更为方便地创建AST的模板
+1. `template.ast(code)`返回整个AST
+2. `template(code)(options)`支持模板占位符.
+```typescript
+const fn = template('console.log(NAME)')
+fn({
+  NAME: t.stringLiteral('test')
+})
+```
+
+### @babel/generator
+根据AST生成字符串代码和sourceMap
+```typescript
+interface IGeneratorOption {
+  sourceMap: boolean; // 是否生成sourceMap
+}
+function generator(ast: AST, options: IGeneratorOption): { code: string; map: string } {}
+```
+
+### @babel/code-frame
+在控制台打印一些报错信息，包含高亮和行数定位等功能
+
+### @babel/core
+babel基于以上的这些包封装实现了编译、插件和预设等功能。@babel/core提供了多种api。
+```typescript
+// options主要配置插件和预设
+// 处理源代码
+function transformSync(code: string, options: ITransformOption): { code: string; map: string; ast: AST }
+
+// 处理源文件
+function transformFileSync(file: string, options: ITransformOption): { code: string; map: string; ast: AST }
+
+// 异步版本
+function transformAsync(code: string, options: ITransformOption): Promise<{ code: string; map: string; ast: AST }>
+function transformFileAsync(file: string, options: ITransformOption): Promise<{ code: string; map: string; ast: AST }>
+```
