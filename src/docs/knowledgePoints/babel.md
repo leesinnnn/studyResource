@@ -110,7 +110,7 @@ t.assertIfStatement(node, options)
 
 ### @babel/template
 使用@babel/types创建AST较为复杂需要一个一个创建和组装，@babel/template提供更为方便地创建AST的模板
-1. `template.ast(code)()`返回整个AST
+1. `template.ast(code)`返回整个AST
 2. `template(code)(options)`支持模板占位符.
 ```typescript
 const fn = template('console.log(NAME)')
@@ -118,6 +118,7 @@ fn({
   NAME: t.stringLiteral('test')
 })
 ```
+3. `template.expression(code)(options)`只返回表达式AST节点
 
 ### @babel/generator
 根据AST生成字符串代码和sourceMap
