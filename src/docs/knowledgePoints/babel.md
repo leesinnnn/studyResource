@@ -202,3 +202,57 @@ SourceMapConsumer.with(rawSourceMap, null, consumer => {
 ```typescript
 //# sourceMappingURL=http://example.com/path/to/your/sourcemap.map
 ```
+
+## babel的插件和预设
+1. 插件和预设既可以是一个字符串也可以是一个对象或者函数，如果需要指定配置可以用二元数组，第二个元素为配置项。
+2. 二者执行顺序为先执行插件再执行预设，插件从前往后执行，预设从后往前执行
+```typescript
+transform(code, {
+  plugins: [babelPlugin],
+  presets: [babelPreset, ['@babel/preset-env', { option: 1 }]]
+})
+```
+### 插件
+插件有两种方式声明，一种是函数形式，另外一种是对象形式
+```typescript
+// api包含types和tempalte等api，option是传入的配置
+function babelPlugin(api, option) {
+  return {
+    // 修改传入的配置项
+    manipulateOptions(opt, parserOpt) {},
+    pre(file) {},
+    visitor: {
+      CallExpression(path, state) {}
+    },
+    post(file) {}
+  }
+}
+
+const babelPlugin = {
+  // 修改传入的配置项
+  manipulateOptions(opt, parserOpt) {},
+  // 调用插件之前的逻辑
+  pre(file) {},
+  visitor: {
+    CallExpression(path, state) {}
+  },
+  // 调用插件之后的逻辑
+  post(file) {}
+}
+```
+
+### 预设
+预设则是插件的集合，组合多个插件。预设也有函数和对象两种形式。
+```typescript
+function babelPreset(api, option) {
+  return {
+    plugins: [],
+    presets: []
+  }
+}
+
+const babelPreset = {
+  plugins: [],
+  presets: []
+}
+```
