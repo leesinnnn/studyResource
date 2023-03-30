@@ -148,3 +148,57 @@ function transformFileSync(file: string, options: ITransformOption): { code: str
 function transformAsync(code: string, options: ITransformOption): Promise<{ code: string; map: string; ast: AST }>
 function transformFileAsync(file: string, options: ITransformOption): Promise<{ code: string; map: string; ast: AST }>
 ```
+## generate和sourceMap原理
+### generate
+generate函数根据AST生成代码字符串。generate函数内部实现对各种类型的AST转换的工具，将AST上省略的结构再补充回来。
+如ConditionExpression就是将AST的test，consequent，alternate用`?`和`：`拼接起来
+```typescript
+function ConditionExpression() {
+  this.print(node.test)
+  this.space()
+  this.token('?')
+  this.space()
+  this.print(node.consequent)
+  this.space()
+  this.token(':')
+  this.print(node.alternate)
+}
+```
+### sourceMap
+1. sourceMap是源代码和转换之后的代码的一个映射关系。
+2. sourceMap生成原理是在parse成的AST中的node.loc中保留了原始的行号和列号，AST在traverse过程中虽然在树的位置发生了变化但是node.loc没有变化，在generate过程中计算现在AST的行列号与原来的做一个对应生成sourceMap。
+3. sourceMap的生成和解析有对应的api
+```typescript
+// 生成sourceMap
+const map = new SourceMapGenerator({ file: "sourceMap.js" })
+map.addMapping({
+  generated: {
+    line: 10,
+    column: 35
+  },
+  source: "foo.js",
+  original: {
+    line: 33,
+    column: 2
+  },
+  name: "console.log"
+})
+// 解析sourceMap
+SourceMapConsumer.with(rawSourceMap, null, consumer => {
+  // 目标代码位置查询源码位置
+  consumer.originalPositionFor({
+    line:2,
+    column: 28
+  })
+  // 源码位置查询模板代码位置
+  consumer.generatedPositionFor({
+    line: 2,
+    column: 10
+  })
+})
+```
+4. sourceMap内联到产物文件中或者通过url指定，谷歌火狐等浏览器能自动解析sourceMap显示源码的位置。
+但是一般生产环境下会将sourceMap上传至错误收集平台，同时收集产物报错信息，在错误收集平台进行源码位置的解析。
+```typescript
+//# sourceMappingURL=http://example.com/path/to/your/sourcemap.map
+```
