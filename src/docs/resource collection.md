@@ -32,6 +32,7 @@
 ### commit message规范
 ### npm script
 ### babel
+### 前端测试
 ## 学习计划
 ### 近期计划
 1. monorepo入门
