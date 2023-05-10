@@ -33,6 +33,8 @@
 ### npm script
 ### babel
 ### 前端测试
+### vite入门
+
 ## 学习计划
 ### 近期计划
 1. monorepo入门
