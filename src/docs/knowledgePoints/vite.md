@@ -74,7 +74,7 @@ export default defineConfig(({ mode }) => {
    * @param {string} path 环境变量声明文件所在的路径
    * @param {string} name 需要加载哪个变量名 ''为所有变量
    */
-  const env = loadEnv(mode, process.pwd(), '')
+  const env = loadEnv(mode, process.cwd(), '')
   // 配置对象
   return {
     // ....
