@@ -12,6 +12,9 @@
 **Cannot find module 'node:path'**
 **原因**: node版本过低导致
 
+**is outside of Vite serving allow list**
+**原因:** 重启vscode
+
 ## 知识点
 ### 对不同内容的处理
 #### 对css的处理
