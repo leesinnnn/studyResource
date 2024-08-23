@@ -1,0 +1,33 @@
+Promise ---> 实例上的属性和方法，静态方法和静态属性
+函数思路 ----> 入参 函数体 出参
+
+Promise构造器接收一个函数，实例化时调用该函数并且传入resolve和reject函数。
+调用resolve函数传入一个值使得Promise的状态变成fulfilled，value为传入的值；调用reject函数传入一个值使得Promise的状态变成rejected，value为传入的值。
+
+Promise.prototype.catch接收一个函数参数，当前Promise的状态为fulfilled时，返回一个新Promise，状态和当前Promise状态一致，值为当前Promise的值。
+当前Promise的状态为rejected时，调用传入的函数，如果函数执行报错，则返回一个失败的Promise，值为抛出的错误。
+如果回调函数返回一个Promise，则返回一个新的Promise，值为该Promise的值，状态也与该Promise的状态一致
+如果没有报错且回调函数没有返回Promise，则返回一个成功的Promise，值为回调函数的返回值。
+
+Promise.prototype.then接收两个参数，这两个参数都是回调函数。Promise在fulfilled状态时会调用第一个参数，rejected状态时调用第二个回调参数。
+Promise.then返回一个promise。如果回调函数执行报错或者throw一个错误，返回的Promise的状态为rejected，值为错误的值。
+如果回调函数返回一个Promise，则Promise.then返回一个新的Promise，值为该Promise的值，状态也与该Promise的状态一致
+如果没有报错且回调函数没有返回Promise，则返回一个成功的Promise，值为回调函数的返回值。
+如果Promise的状态为rejected，但是Promise.then没有第二个参数，则返回一个rejected的Promise，值为当前Promise的reject值
+
+Promise.prototype.finally接收一个函数参数，promise状态确定时（即变成rejected或者fulfilled）调用该回调函数。
+返回一个新的Promise。状态和值总是和当前Promise相同
+
+Promise.all接收一个数组，如果数组中的元素不是promise则使用Promise.resolve包裹，是Promise则不作处理。考虑实现方便，都使用Promise.resolve包裹。
+数组中的每个Promise都成功，则返回成功的promise，值是一个数组，数组中的每个元素是每个promise的值。
+数组中只要有一个promise失败，则返回失败的promise，值是第一个失败的promise的值。
+
+Promise.resolve接收一个参数，如果这个参数是Promise，则返回一个新的Promise，值是该Promise的值，状态与该Promise状态一致。
+如果这个参数是非Promise，则返回一个成功的Promise，值是该参数。
+
+Promise.reject接收一个参数，都返回一个rejected的promise
+
+Promise.allSettled接收一个数组，数组中的每一个元素使用promise.resolve包裹。返回一个promise，等到所有promise的状态都确定之后，返回的promise状态变更为fulfilled，
+value值为一个数组，每个元素是一个对象，包含status和value属性，status表示promise的状态，value为promise的值
+
+Promise.race接收一个数组，数组中的每一个元素使用Promise.resolve包裹。返回一个Promise，只要数组中的某一个promise状态变更，那么返回的Promise的状态也就变更，值为当前变更的promise的值。
